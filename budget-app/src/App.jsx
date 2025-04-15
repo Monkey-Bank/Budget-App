@@ -1,23 +1,38 @@
+import React, { useState, useEffect } from 'react'; // ← 追加
 import './App.css';
-import Budget from './components/Budget';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/header';
-import List from './components/List';
+import Home from './components/Home';
+import PlaceManager from './components/PlaceManager';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <>
       <Header />
-      <Budget />
-      <List />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/place-manager" element={<PlaceManagerWrapper />} />
+      </Routes>
+      <Footer />
     </>
   );
 }
 
+// 🟢 ラップして props を渡すようにする
+const PlaceManagerWrapper = () => {
+  const [places, setPlaces] = useState(() => {
+    const saved = localStorage.getItem('places');
+    return saved
+      ? JSON.parse(saved)
+      : ['スーパーマーケット', 'コンビニ', 'レストラン', '病院', '薬局'];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('places', JSON.stringify(places));
+  }, [places]);
+
+  return <PlaceManager places={places} setPlaces={setPlaces} />;
+};
+
 export default App;
-
-// 1か月の金額設定
-// 使った場所をプルダウンから選択、金額を入力後、追加ボタンを押してリストに追加
-// 使った額の合計
-// 残りの合計
-
-//金額設定や使った場所を編集できる
