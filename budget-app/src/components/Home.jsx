@@ -1,16 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PlaceManager from './PlaceManager';
-import {
-  Portal,
-  Select,
-  createListCollection,
-  NativeSelect,
-  NumberInput,
-  Input,
-  Flex,
-  Button,
-} from '@chakra-ui/react';
-import { LightMode } from '@/components/ui/color-mode';
 
 const Home = () => {
   //金額の設定、使用と残高
@@ -149,235 +137,151 @@ const Home = () => {
 
   return (
     <>
-      <LightMode>
-        <div style={{ marginTop: '30px' }}>
-          <h3>月別予算設定</h3>
-          <Flex align="center">
-            <Input
-              size="xs"
-              width="150px"
-              type="month"
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-            />
-            <NumberInput.Root width="150px" size="xs">
-              <NumberInput.Input
-                type="number"
-                placeholder="設定金額"
-                value={budgetAmount}
-                onChange={(e) => setBudgetAmount(e.target.value)}
-              />
-            </NumberInput.Root>
-            <Button size="xs" colorPalette="blue" onClick={handleSetBudget}>
-              ＋
-            </Button>
-          </Flex>
+      <div style={{ marginTop: '30px' }}>
+        <h3>月別予算設定</h3>
 
-          <ul>
-            {Object.entries(budgets).map(([month, amount]) => (
-              <li key={month}>
-                {editingMonth === month ? (
+        <input
+          size="xs"
+          width="150px"
+          type="month"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        />
+
+        <input
+          type="number"
+          placeholder="設定金額"
+          value={budgetAmount}
+          onChange={(e) => setBudgetAmount(e.target.value)}
+        />
+
+        <button onClick={handleSetBudget}>＋</button>
+
+        <ul>
+          {Object.entries(budgets).map(([month, amount]) => (
+            <li key={month}>
+              {editingMonth === month ? (
+                <>
+                  {month}：
+                  <input
+                    type="number"
+                    value={editingAmount}
+                    onChange={(e) => setEditingAmount(e.target.value)}
+                  />
+                  円<button onClick={handleSaveBudget}>保存</button>
+                  <button onClick={handleCancelBudgetEdit}>キャンセル</button>
+                </>
+              ) : (
+                <>
+                  {month}：{amount} 円
+                  <button onClick={() => handleEditBudget(month)}>↺</button>
+                  <button onClick={() => handleDeleteBudget(month)}>ー</button>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div style={{ marginTop: '30px' }}>
+        <h3>月ごとの支出と残額</h3>
+        {Object.entries(budgets).map(([month, budget]) => {
+          const monthlyTotal = items
+            .filter((item) => item.date.startsWith(month))
+            .reduce((sum, item) => sum + Number(item.price), 0);
+          const remaining = budget - monthlyTotal;
+          return (
+            <div key={month}>
+              <strong>{month}</strong>：合計 {monthlyTotal} 円 ／ 残り{' '}
+              {remaining} 円
+            </div>
+          );
+        })}
+      </div>
+
+      <form onSubmit={handleAdd}>
+        {/* 日付を最初に */}
+        <input
+          size="xs"
+          width="150px"
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+        />
+        {/* 次に場所 */}
+        <select name="place" value={formData.place} onChange={handleChange}>
+          <option value="" disabled>
+            場所を選択
+          </option>
+          {places.map((place, idx) => (
+            <option key={idx} value={place}>
+              {place}
+            </option>
+          ))}
+        </select>
+        {/* 金額 */}
+        <input
+          type="number"
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+          placeholder="支出金額"
+        />
+        円<button type="submit">＋</button>
+      </form>
+
+      <div style={{ marginTop: '20px' }}>
+        <h3>入力一覧</h3>
+        <ul>
+          {[...items]
+            .sort((a, b) => new Date(a.date) - new Date(b.date)) // 日付順にソート
+            .map((item, index) => (
+              <li key={index}>
+                {editIndex === index ? (
                   <>
-                    <Flex align="center">
-                      {month}：
-                      <NumberInput.Root width="150px" size="xs">
-                        <NumberInput.Input
-                          type="number"
-                          value={editingAmount}
-                          onChange={(e) => setEditingAmount(e.target.value)}
-                        />
-                      </NumberInput.Root>
-                      円
-                      <Button
-                        size="xs"
-                        colorPalette="blue"
-                        onClick={handleSaveBudget}
-                      >
-                        保存
-                      </Button>
-                      <Button
-                        size="xs"
-                        colorPalette="gray"
-                        variant="surface"
-                        onClick={handleCancelBudgetEdit}
-                      >
-                        キャンセル
-                      </Button>
-                    </Flex>
+                    <input
+                      size="xs"
+                      width="150px"
+                      type="date"
+                      name="date"
+                      value={editData.date}
+                      onChange={handleEditChange}
+                    />
+                    <select
+                      name="place"
+                      value={editData.place}
+                      onChange={handleEditChange}
+                    >
+                      <option value="" disabled>
+                        場所を選択
+                      </option>
+                      {places.map((place, idx) => (
+                        <option key={idx} value={place}>
+                          {place}
+                        </option>
+                      ))}
+                    </select>
+                    <input
+                      name="price"
+                      value={editData.price}
+                      onChange={handleEditChange}
+                      placeholder="支出金額"
+                    />
+                    円<button onClick={() => handleSave(index)}>保存</button>
+                    <button onClick={handleCancel}>キャンセル</button>
                   </>
                 ) : (
                   <>
-                    <Flex align="center">
-                      {month}：{amount} 円
-                      <Button
-                        size="xs"
-                        colorPalette="green"
-                        onClick={() => handleEditBudget(month)}
-                      >
-                        ↺
-                      </Button>
-                      <Button
-                        size="xs"
-                        colorPalette="red"
-                        onClick={() => handleDeleteBudget(month)}
-                      >
-                        ー
-                      </Button>
-                    </Flex>
+                    {item.date}｜{item.place}：{item.price} 円
+                    <button onClick={() => handleEditClick(index)}>↺</button>
+                    <button onClick={() => handleDelete(index)}>ー</button>
                   </>
                 )}
               </li>
             ))}
-          </ul>
-        </div>
-
-        <div style={{ marginTop: '30px' }}>
-          <h3>月ごとの支出と残額</h3>
-          {Object.entries(budgets).map(([month, budget]) => {
-            const monthlyTotal = items
-              .filter((item) => item.date.startsWith(month))
-              .reduce((sum, item) => sum + Number(item.price), 0);
-            const remaining = budget - monthlyTotal;
-            return (
-              <div key={month}>
-                <strong>{month}</strong>：合計 {monthlyTotal} 円 ／ 残り{' '}
-                {remaining} 円
-              </div>
-            );
-          })}
-        </div>
-
-        <form onSubmit={handleAdd}>
-          <Flex align="center">
-            {/* 日付を最初に */}
-            <Input
-              size="xs"
-              width="150px"
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-            />
-            {/* 次に場所 */}
-            <NativeSelect.Root size="sm" width="150px">
-              <NativeSelect.Field
-                name="place"
-                value={formData.place}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  場所を選択
-                </option>
-                {places.map((place, idx) => (
-                  <option key={idx} value={place}>
-                    {place}
-                  </option>
-                ))}
-              </NativeSelect.Field>
-            </NativeSelect.Root>
-            {/* 金額 */}
-            <NumberInput.Root size="xs" width="150px">
-              <NumberInput.Input
-                type="number"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                placeholder="支出金額"
-              />
-            </NumberInput.Root>
-            円
-            <Button size="xs" colorPalette="blue" type="submit">
-              ＋
-            </Button>
-          </Flex>
-        </form>
-
-        <div style={{ marginTop: '20px' }}>
-          <h3>入力一覧</h3>
-          <ul>
-            {[...items]
-              .sort((a, b) => new Date(a.date) - new Date(b.date)) // 日付順にソート
-              .map((item, index) => (
-                <li key={index}>
-                  {editIndex === index ? (
-                    <>
-                      <Flex align="center">
-                        <Input
-                          size="xs"
-                          width="150px"
-                          type="date"
-                          name="date"
-                          value={editData.date}
-                          onChange={handleEditChange}
-                        />
-                        <NativeSelect.Root size="sm" width="150px">
-                          <NativeSelect.Field
-                            name="place"
-                            value={editData.place}
-                            onChange={handleEditChange}
-                          >
-                            <option value="" disabled>
-                              場所を選択
-                            </option>
-                            {places.map((place, idx) => (
-                              <option key={idx} value={place}>
-                                {place}
-                              </option>
-                            ))}
-                          </NativeSelect.Field>
-                        </NativeSelect.Root>
-                        <NumberInput.Root width="150px" size="xs">
-                          <NumberInput.Input
-                            name="price"
-                            value={editData.price}
-                            onChange={handleEditChange}
-                            placeholder="支出金額"
-                          />
-                        </NumberInput.Root>
-                        円
-                        <Button
-                          size="xs"
-                          colorPalette="blue"
-                          onClick={() => handleSave(index)}
-                        >
-                          保存
-                        </Button>
-                        <Button
-                          size="xs"
-                          colorPalette="gray"
-                          variant="subtle"
-                          onClick={handleCancel}
-                        >
-                          キャンセル
-                        </Button>
-                      </Flex>
-                    </>
-                  ) : (
-                    <>
-                      <Flex align="center">
-                        {item.date}｜{item.place}：{item.price} 円
-                        <Button
-                          size="xs"
-                          colorPalette="green"
-                          onClick={() => handleEditClick(index)}
-                        >
-                          ↺
-                        </Button>
-                        <Button
-                          size="xs"
-                          colorPalette="red"
-                          onClick={() => handleDelete(index)}
-                        >
-                          ー
-                        </Button>
-                      </Flex>
-                    </>
-                  )}
-                </li>
-              ))}
-          </ul>
-        </div>
-      </LightMode>
+        </ul>
+      </div>
     </>
   );
 };

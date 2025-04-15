@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // ← 追加
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/header';

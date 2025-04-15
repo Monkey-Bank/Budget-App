@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Input, Button } from '@chakra-ui/react';
-import { LightMode } from '@/components/ui/color-mode';
 
 const PlaceManager = ({ places, setPlaces }) => {
   const [newPlace, setNewPlace] = useState('');
@@ -18,45 +16,30 @@ const PlaceManager = ({ places, setPlaces }) => {
 
   return (
     <div style={{ marginTop: '20px' }}>
-      <LightMode>
-        <h4>場所の管理</h4>
-        <Input
-          width="150px"
-          size="xs"
-          value={newPlace}
-          onChange={(e) => setNewPlace(e.target.value)}
-          placeholder="新しい場所を追加"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              handleAddPlace();
-            }
-          }}
-        />
-        <Button
-          size="xs"
-          colorPalette="blue"
-          type="button"
-          onClick={handleAddPlace}
-        >
-          ＋
-        </Button>
+      <h4>場所の管理</h4>
+      <input
+        value={newPlace}
+        onChange={(e) => setNewPlace(e.target.value)}
+        placeholder="新しい場所を追加"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddPlace();
+          }
+        }}
+      />
+      <button type="button" onClick={handleAddPlace}>
+        ＋
+      </button>
 
-        <ul>
-          {places.map((place, idx) => (
-            <li key={idx}>
-              {place}
-              <Button
-                size="xs"
-                colorPalette="red"
-                onClick={() => handleDeletePlace(place)}
-              >
-                ー
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </LightMode>
+      <ul>
+        {places.map((place, idx) => (
+          <li key={idx}>
+            {place}
+            <button onClick={() => handleDeletePlace(place)}>ー</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
