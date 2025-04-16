@@ -2,7 +2,7 @@ import React from 'react';
 
 const MonthlySummary = ({ budgets, items }) => {
   return (
-    <div style={{ marginTop: '30px' }}>
+    <div>
       <h3>月ごとの支出と残額</h3>
       {Object.entries(budgets).map(([month, budget]) => {
         const monthlyTotal = items
