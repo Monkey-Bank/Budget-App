@@ -58,30 +58,41 @@ const ExpenseList = ({ items, setItems, places }) => {
   return (
     <div>
       <form onSubmit={handleAdd}>
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-        />
-        <select name="place" value={formData.place} onChange={handleChange}>
-          <option value="" disabled>
-            場所を選択
-          </option>
-          {places.map((place, idx) => (
-            <option key={idx} value={place}>
-              {place}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          placeholder="支出金額"
-        />
-        円<button type="submit">＋</button>
+        <div className="flex">
+          <div className="bg-sky-100">
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="bg-sky-100">
+            <select name="place" value={formData.place} onChange={handleChange}>
+              <option value="" disabled>
+                場所を選択
+              </option>
+              {places.map((place, idx) => (
+                <option key={idx} value={place}>
+                  {place}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="bg-sky-100">
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              placeholder="支出金額"
+            />
+          </div>
+          円
+          <button type="submit">
+            <i className="fa-solid fa-square-plus text-sky-500 text-xl hover:text-sky-300"></i>
+          </button>
+        </div>
       </form>
 
       <h3>入力一覧</h3>
@@ -118,14 +129,23 @@ const ExpenseList = ({ items, setItems, places }) => {
                     onChange={handleEditChange}
                     placeholder="支出金額"
                   />
-                  円<button onClick={handleSave}>保存</button>
-                  <button onClick={handleCancel}>キャンセル</button>
+                  円
+                  <button onClick={handleSave}>
+                    <i className="fa-solid fa-download text-lime-600 hover:text-lime-400"></i>
+                  </button>
+                  <button onClick={handleCancel}>
+                    <i className="fa-solid fa-ban text-red-600 hover:text-red-400"></i>
+                  </button>
                 </>
               ) : (
                 <>
                   {item.date}｜{item.place}：{item.price} 円
-                  <button onClick={() => handleEditClick(item.id)}>↺</button>
-                  <button onClick={() => handleDelete(item.id)}>ー</button>
+                  <button onClick={() => handleEditClick(item.id)}>
+                    <i className="fa-regular fa-pen-to-square text-lime-600 hover:text-lime-400"></i>
+                  </button>
+                  <button onClick={() => handleDelete(item.id)}>
+                    <i className="fa-solid fa-trash text-red-600 hover:text-red-400"></i>
+                  </button>
                 </>
               )}
             </li>

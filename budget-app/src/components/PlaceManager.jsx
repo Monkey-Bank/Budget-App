@@ -18,6 +18,7 @@ const PlaceManager = ({ places, setPlaces }) => {
     <div style={{ marginTop: '20px' }}>
       <h4>場所の管理</h4>
       <input
+        className="underline"
         value={newPlace}
         onChange={(e) => setNewPlace(e.target.value)}
         placeholder="新しい場所を追加"
@@ -29,7 +30,7 @@ const PlaceManager = ({ places, setPlaces }) => {
         }}
       />
       <button type="button" onClick={handleAddPlace}>
-        ＋
+        <i className="fa-solid fa-square-plus text-sky-500 text-xl hover:text-sky-300"></i>
       </button>
 
       <ul>
