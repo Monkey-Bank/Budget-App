@@ -41,20 +41,27 @@ const BudgetSetting = ({ budgets, setBudgets }) => {
   return (
     <div>
       <h3>月別予算設定</h3>
-      <input
-        type="month"
-        value={selectedMonth}
-        onChange={(e) => setSelectedMonth(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="設定金額"
-        value={budgetAmount}
-        onChange={(e) => setBudgetAmount(e.target.value)}
-      />
-      <button onClick={handleSetBudget}>
-        <i className="fa-solid fa-plus"></i>
-      </button>
+      <div className="flex">
+        <div className="bg-sky-100 ">
+          <input
+            type="month"
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+          />
+        </div>
+        <div className="bg-sky-100 hover:bg-white">
+          <input
+            type="number"
+            placeholder="設定金額"
+            value={budgetAmount}
+            onChange={(e) => setBudgetAmount(e.target.value)}
+          />
+        </div>
+
+        <button onClick={handleSetBudget}>
+          <i className="fa-solid fa-square-plus text-sky-500 text-2xl hover:text-sky-300"></i>
+        </button>
+      </div>
 
       <ul>
         {Object.entries(budgets).map(([month, amount]) => (
@@ -63,21 +70,27 @@ const BudgetSetting = ({ budgets, setBudgets }) => {
               <>
                 {month}：
                 <input
+                  className="underline"
                   type="number"
                   value={editingAmount}
                   onChange={(e) => setEditingAmount(e.target.value)}
                 />
-                円<button onClick={handleSaveBudget}>保存</button>
-                <button onClick={handleCancelBudgetEdit}>キャンセル</button>
+                円
+                <button onClick={handleSaveBudget}>
+                  <i className="fa-solid fa-download text-lime-600 hover:text-lime-400"></i>
+                </button>
+                <button onClick={handleCancelBudgetEdit}>
+                  <i className="fa-solid fa-ban text-red-600 hover:text-red-400"></i>
+                </button>
               </>
             ) : (
               <>
                 {month}：{amount} 円
                 <button onClick={() => handleEditBudget(month)}>
-                  <i className="fa-regular fa-pen-to-square"></i>
+                  <i className="fa-regular fa-pen-to-square text-xl text-lime-600 hover:text-lime-400"></i>
                 </button>
                 <button onClick={() => handleDeleteBudget(month)}>
-                  <i className="fa-solid fa-trash"></i>
+                  <i className="fa-solid fa-trash text-xl text-red-600 hover:text-red-400"></i>
                 </button>
               </>
             )}
