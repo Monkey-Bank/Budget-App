@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <>
-      <div className="justify-items-center bg-zinc-800 absolute bottom-0 w-full opacity-0 hover:opacity-100">
+      <div className="justify-items-center bg-zinc-800 absolute bottom-0 w-full h-5 opacity-0 hover:opacity-100">
         <p className="text-xs text-zinc-100">
           Budget App Product by Monkey Bank
         </p>

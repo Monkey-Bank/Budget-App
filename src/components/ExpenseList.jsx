@@ -56,7 +56,7 @@ const ExpenseList = ({ items, setItems, places }) => {
   };
 
   return (
-    <div>
+    <div className="bg-teal-100">
       <form onSubmit={handleAdd}>
         <div className="flex">
           <div className="bg-sky-100">
