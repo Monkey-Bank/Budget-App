@@ -25,7 +25,7 @@ const ExpenseList = ({ items, setItems, places }) => {
     if (!formData.place || !formData.price || !formData.date) return;
     const newItem = { id: uuidv4(), ...formData }; // ✅ IDを付ける
     setItems([...items, newItem]);
-    setFormData({ place: '', price: '', date: '' }); // idはリセット不要
+    setFormData({ place: '', price: '', date: '' });
   };
 
   const handleEditClick = (id) => {
@@ -56,51 +56,67 @@ const ExpenseList = ({ items, setItems, places }) => {
   };
 
   return (
-    <div className="bg-teal-100">
+    <div className="max-w-4xl bg-slate-100 rounded-xl shadow-md m-auto my-10 p-10 mb-20">
+      <h3 className="text-xl font-bold">支出一覧</h3>
       <form onSubmit={handleAdd}>
-        <div className="flex">
-          <div className="bg-sky-100">
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="bg-sky-100">
-            <select name="place" value={formData.place} onChange={handleChange}>
-              <option value="" disabled>
-                場所を選択
+        <div className="flex flex-wrap gap-4 items-center my-6">
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="rounded bg-white"
+          />
+          <select
+            name="place"
+            value={formData.place}
+            onChange={handleChange}
+            className="rounded w-35 bg-white"
+          >
+            <option value="" disabled>
+              例：スーパー
+            </option>
+            {places.map((place, idx) => (
+              <option key={idx} value={place}>
+                {place}
               </option>
-              {places.map((place, idx) => (
-                <option key={idx} value={place}>
-                  {place}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="bg-sky-100">
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              placeholder="支出金額"
-            />
-          </div>
-          円
+            ))}
+          </select>
+          <input
+            type="number"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleAdd();
+              }
+            }}
+            placeholder="例：3000"
+            className="rounded w-30 bg-white"
+          />
+          <span>円</span>
           <button type="submit">
-            <i className="fa-solid fa-square-plus text-sky-500 text-xl hover:text-sky-300"></i>
+            <i className="fa-solid fa-square-plus cursor-pointer text-sky-500 text-2xl hover:text-sky-300"></i>
           </button>
         </div>
       </form>
 
-      <h3>入力一覧</h3>
-      <ul>
+      <ul className="space-y-2 bg-white p-4 rounded shadow-inner border-t border-slate-200">
+        <div className="grid grid-cols-4 font-bold text-gray-800 border-b border-gray-200">
+          <div>日付</div>
+          <div>場所</div>
+          <div>金額</div>
+          <div className="ml-14">操作</div>
+        </div>
+
         {[...items]
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .map((item) => (
-            <li key={item.id}>
+            <li
+              key={item.id}
+              className="grid grid-cols-4 items-center border-b border-slate-200 my-4"
+            >
               {editId === item.id ? (
                 <>
                   <input
@@ -108,15 +124,14 @@ const ExpenseList = ({ items, setItems, places }) => {
                     name="date"
                     value={editData.date}
                     onChange={handleEditChange}
+                    className="rounded text-lime-600"
                   />
                   <select
                     name="place"
                     value={editData.place}
                     onChange={handleEditChange}
+                    className="rounded text-lime-600"
                   >
-                    <option value="" disabled>
-                      場所を選択
-                    </option>
                     {places.map((place, idx) => (
                       <option key={idx} value={place}>
                         {place}
@@ -127,25 +142,33 @@ const ExpenseList = ({ items, setItems, places }) => {
                     name="price"
                     value={editData.price}
                     onChange={handleEditChange}
-                    placeholder="支出金額"
+                    className="rounded text-lime-600"
                   />
-                  円
-                  <button onClick={handleSave}>
-                    <i className="fa-solid fa-download text-lime-600 hover:text-lime-400"></i>
-                  </button>
-                  <button onClick={handleCancel}>
-                    <i className="fa-solid fa-ban text-red-600 hover:text-red-400"></i>
-                  </button>
+                  <div className="flex gap-2 justify-center">
+                    <button onClick={handleSave} className="mx-2">
+                      <i className="fa-solid fa-download text-base cursor-pointer text-lime-600 hover:text-lime-400"></i>
+                    </button>
+                    <button onClick={handleCancel}>
+                      <i className="fa-solid fa-ban text-lg cursor-pointer text-red-600 hover:text-red-400"></i>
+                    </button>
+                  </div>
                 </>
               ) : (
                 <>
-                  {item.date}｜{item.place}：{item.price} 円
-                  <button onClick={() => handleEditClick(item.id)}>
-                    <i className="fa-regular fa-pen-to-square text-lime-600 hover:text-lime-400"></i>
-                  </button>
-                  <button onClick={() => handleDelete(item.id)}>
-                    <i className="fa-solid fa-trash text-red-600 hover:text-red-400"></i>
-                  </button>
+                  <span>{item.date}</span>
+                  <span>{item.place}</span>
+                  <span className="">{item.price} 円</span>
+                  <div className="flex gap-2 justify-center">
+                    <button
+                      onClick={() => handleEditClick(item.id)}
+                      className="mx-2"
+                    >
+                      <i className="fa-regular fa-pen-to-square cursor-pointer text-lg text-lime-600 hover:text-lime-400"></i>
+                    </button>
+                    <button onClick={() => handleDelete(item.id)}>
+                      <i className="fa-solid fa-trash cursor-pointer text-lg text-red-600 hover:text-red-400"></i>
+                    </button>
+                  </div>
                 </>
               )}
             </li>

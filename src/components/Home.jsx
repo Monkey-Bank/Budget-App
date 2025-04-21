@@ -35,8 +35,10 @@ const Home = () => {
 
   return (
     <>
-      <BudgetSetting budgets={budgets} setBudgets={setBudgets} />
-      <MonthlySummary budgets={budgets} items={items} />
+      <div className="justify-center md:flex grid-cols-2 gap-25">
+        <BudgetSetting budgets={budgets} setBudgets={setBudgets} />
+        <MonthlySummary budgets={budgets} items={items} />
+      </div>
       <ExpenseList items={items} setItems={setItems} places={places} />
     </>
   );
