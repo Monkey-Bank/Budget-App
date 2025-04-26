@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="justify-center md:flex grid-cols-2 gap-25">
+      <div className="justify-center md:flex grid-cols-2 gap-10">
         <BudgetSetting budgets={budgets} setBudgets={setBudgets} />
         <MonthlySummary budgets={budgets} items={items} />
       </div>

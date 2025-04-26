@@ -15,7 +15,7 @@ const PlaceManager = ({ places, setPlaces }) => {
   };
 
   return (
-    <div className="bg-slate-100 my-10 p-10 rounded-xl shadow-md md:w-130 m-auto">
+    <div className="bg-slate-100 mx-10 my-10 p-10 rounded-xl shadow-md md:w-130 md:mx-auto">
       <h4 className="text-xl font-bold mb-4">支出場所の編集</h4>
 
       {/* 入力エリア */}
