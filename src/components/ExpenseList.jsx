@@ -56,7 +56,7 @@ const ExpenseList = ({ items, setItems, places }) => {
   };
 
   return (
-    <div className="max-w-4xl bg-slate-100 rounded-xl shadow-md m-auto my-10 p-10 mb-20">
+    <div className="max-w-4xl bg-slate-100 rounded-xl shadow-md md:m-auto md:my-10 mx-10 p-10 mb-20">
       <h3 className="text-xl font-bold">支出一覧</h3>
       <form onSubmit={handleAdd}>
         <div className="flex flex-wrap gap-4 items-center my-6">
@@ -65,13 +65,13 @@ const ExpenseList = ({ items, setItems, places }) => {
             name="date"
             value={formData.date}
             onChange={handleChange}
-            className="rounded bg-white"
+            className="rounded bg-white w-40"
           />
           <select
             name="place"
             value={formData.place}
             onChange={handleChange}
-            className="rounded w-35 bg-white"
+            className="rounded w-35 bg-white w-40"
           >
             <option value="" disabled>
               例：スーパー
@@ -93,7 +93,7 @@ const ExpenseList = ({ items, setItems, places }) => {
               }
             }}
             placeholder="例：3000"
-            className="rounded w-30 bg-white"
+            className="rounded w-40 bg-white"
           />
           <span>円</span>
           <button type="submit">

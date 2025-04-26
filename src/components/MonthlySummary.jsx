@@ -14,7 +14,7 @@ const MonthlySummary = ({ budgets, items }) => {
   const currentRemaining = currentBudget - currentMonthTotal;
 
   return (
-    <div className="bg-slate-100 my-10 p-10 rounded-xl shadow-md md:w-130">
+    <div className="bg-slate-100 my-10 mx-10 p-10 rounded-xl shadow-md md:w-130">
       <div className="flex justify-between">
         <h3 className="text-xl font-bold mt-9">月ごとの支出と残高</h3>
         <div>

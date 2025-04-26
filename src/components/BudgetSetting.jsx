@@ -42,7 +42,7 @@ const BudgetSetting = ({ budgets, setBudgets }) => {
   const currentBudget = budgets[currentMonth] || 0;
 
   return (
-    <div className="bg-slate-100 my-10 p-10 rounded-xl shadow-md md:w-130">
+    <div className="bg-slate-100 my-10 mx-10 p-10 rounded-xl shadow-md md:w-130">
       <div className="flex justify-between">
         <h3 className="text-xl font-bold content-center">月別予算設定</h3>
         <div>
@@ -56,14 +56,14 @@ const BudgetSetting = ({ budgets, setBudgets }) => {
       <div className="my-6 flex flex-wrap gap-4 items-center">
         <input
           type="month"
-          className="rounded bg-white"
+          className="w-40 rounded bg-white"
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
         />
         <input
           type="number"
           placeholder="例：50000"
-          className="rounded bg-white"
+          className="w-40 rounded bg-white"
           value={budgetAmount}
           onChange={(e) => setBudgetAmount(e.target.value)}
           onKeyDown={(e) => {
