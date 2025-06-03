@@ -1,30 +1,71 @@
-# はじめに
+# Budget App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![preview](./public/coins.jpg)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## はじめに
 
-## Expanding the ESLint configuration
+1 ヶ月間の支出を記録し、決めた予算内でやりくりすることをサポートする家計管理アプリです。  
+「どれくらい使ったか？」「予算を超えていないか？」が一目でわかる設計です。
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
 
-1, タイトルと概要、URL
-Budget App
-（画像）
-URL()
+## アプリを作ったキッカケ
 
-2, 開発理由
+**私自身が必要だと思ったから開発しました。**
 
-3, 使用技術
-Category Technology Stack
-Frontend JavaScript, React, Vite
-Environment setup Docker
-CI/CD GitHub Actions
-Design Tailwind CSS
-etc. Prettier, Git, GitHub
-4, 機能、非機能一覧
+- 1 ヶ月間でどれくらい使っているかを把握できる
+- 決められたバジェットの中でどうやりくりするか考えることができる
+- 金銭感覚を磨ける
+- 無駄遣いをせずに貯金を増やせる
+- 無駄な出費があったら一目でわかる
 
-5, 今後の展望
+毎月の支出を見直すことで、より健全な家計管理を目指せます。
+
+---
+
+## 使用技術・ライブラリ
+
+- **React 19**
+- **Vite**
+- **Tailwind CSS 4**
+- **React Router DOM v7**
+- **UUID**
+- **Firebase**
+  - Hosting
+
+---
+
+## ■ 機能概要
+
+| 機能                        | 説明                                                       |
+| --------------------------- | ---------------------------------------------------------- |
+| 💸 月ごとの予算設定         | カテゴリごとに毎月の予算を設定できます                     |
+| 🧾 支出の記録               | 日々の支出を簡単に記録＆表示                               |
+| 📊 残額の自動計算           | 予算に対して残りいくら使えるかを自動計算                   |
+| 📅 月別の一覧表示           | カレンダー形式や月単位での支出確認が可能                   |
+| 🗺️ 支出場所の管理　　　　　 | よく使う店舗や場所を記録＆分類可能　　　　　　　　　　　　 |
+
+---
+
+## ■ 画面イメージ
+
+![preview1](./public/screenshot1.png)
+![preview2](./public/screenshot2.png)
+
+---
+
+## ■ 今後のアップデート
+
+- 月ごとの支出をグラフ化 | 視覚的に支出バランスを把握できる円グラフや棒グラフを追加予定
+- 通年グラフの追加 | 年間の支出推移を確認し、長期的な家計管理に役立てられるようにする
+- すべてを削除するリセット機能
+
+---
+
+## ■ リンク先
+
+[Budget App](https://budget-app-cf5dc.web.app/)
+
+---
